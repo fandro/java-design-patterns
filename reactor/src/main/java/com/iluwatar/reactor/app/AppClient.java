@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,10 +20,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.iluwatar.reactor.app;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package com.iluwatar.reactor.app;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,6 +36,8 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents the clients of Reactor pattern. Multiple clients are run concurrently and send logging
@@ -51,7 +51,7 @@ public class AppClient {
 
   /**
    * App client entry.
-   * 
+   *
    * @throws IOException if any I/O error occurs.
    */
   public static void main(String[] args) throws IOException {
@@ -61,10 +61,11 @@ public class AppClient {
 
   /**
    * Starts the logging clients.
-   * 
+   *
    * @throws IOException if any I/O error occurs.
    */
   public void start() throws IOException {
+    LOGGER.info("Starting logging clients");
     service.execute(new TcpLoggingClient("Client 1", 6666));
     service.execute(new TcpLoggingClient("Client 2", 6667));
     service.execute(new UdpLoggingClient("Client 3", 6668));
@@ -81,16 +82,17 @@ public class AppClient {
       try {
         service.awaitTermination(1000, TimeUnit.SECONDS);
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        LOGGER.error("exception awaiting termination", e);
       }
     }
+    LOGGER.info("Logging clients stopped");
   }
 
   private static void artificialDelayOf(long millis) {
     try {
       Thread.sleep(millis);
     } catch (InterruptedException e) {
-      e.printStackTrace();
+      LOGGER.error("sleep interrupted", e);
     }
   }
 
@@ -104,22 +106,23 @@ public class AppClient {
 
     /**
      * Creates a new TCP logging client.
-     * 
+     *
      * @param clientName the name of the client to be sent in logging requests.
-     * @param port the port on which client will send logging requests.
+     * @param serverPort the port on which client will send logging requests.
      */
     public TcpLoggingClient(String clientName, int serverPort) {
       this.clientName = clientName;
       this.serverPort = serverPort;
     }
 
+    @Override
     public void run() {
       try (Socket socket = new Socket(InetAddress.getLocalHost(), serverPort)) {
         OutputStream outputStream = socket.getOutputStream();
         PrintWriter writer = new PrintWriter(outputStream);
         sendLogRequests(writer, socket.getInputStream());
       } catch (IOException e) {
-        e.printStackTrace();
+        LOGGER.error("error sending requests", e);
         throw new RuntimeException(e);
       }
     }
@@ -152,9 +155,9 @@ public class AppClient {
 
     /**
      * Creates a new UDP logging client.
-     * 
+     *
      * @param clientName the name of the client to be sent in logging requests.
-     * @param port the port on which client will send logging requests.
+     * @param port       the port on which client will send logging requests.
      * @throws UnknownHostException if localhost is unknown
      */
     public UdpLoggingClient(String clientName, int port) throws UnknownHostException {
@@ -185,7 +188,7 @@ public class AppClient {
           artificialDelayOf(100);
         }
       } catch (IOException e1) {
-        e1.printStackTrace();
+        LOGGER.error("error sending packets", e1);
       }
     }
   }

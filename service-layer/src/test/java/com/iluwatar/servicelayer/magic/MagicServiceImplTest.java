@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.servicelayer.magic;
 
 import com.iluwatar.servicelayer.spell.Spell;
@@ -28,15 +29,14 @@ import com.iluwatar.servicelayer.spellbook.Spellbook;
 import com.iluwatar.servicelayer.spellbook.SpellbookDao;
 import com.iluwatar.servicelayer.wizard.Wizard;
 import com.iluwatar.servicelayer.wizard.WizardDao;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -52,7 +52,7 @@ import static org.mockito.Mockito.when;
 public class MagicServiceImplTest {
 
   @Test
-  public void testFindAllWizards() throws Exception {
+  public void testFindAllWizards() {
     final WizardDao wizardDao = mock(WizardDao.class);
     final SpellbookDao spellbookDao = mock(SpellbookDao.class);
     final SpellDao spellDao = mock(SpellDao.class);
@@ -97,11 +97,10 @@ public class MagicServiceImplTest {
   public void testFindWizardsWithSpellbook() throws Exception {
     final String bookname = "bookname";
     final Spellbook spellbook = mock(Spellbook.class);
-    final Set<Wizard> wizards = new HashSet<>();
-    wizards.add(mock(Wizard.class));
-    wizards.add(mock(Wizard.class));
-    wizards.add(mock(Wizard.class));
-
+    final Set<Wizard> wizards = Set.of(
+            mock(Wizard.class),
+            mock(Wizard.class),
+            mock(Wizard.class));
     when(spellbook.getWizards()).thenReturn(wizards);
 
     final SpellbookDao spellbookDao = mock(SpellbookDao.class);
@@ -126,11 +125,10 @@ public class MagicServiceImplTest {
 
   @Test
   public void testFindWizardsWithSpell() throws Exception {
-    final Set<Wizard> wizards = new HashSet<>();
-    wizards.add(mock(Wizard.class));
-    wizards.add(mock(Wizard.class));
-    wizards.add(mock(Wizard.class));
-
+    final Set<Wizard> wizards = Set.of(
+            mock(Wizard.class),
+            mock(Wizard.class),
+            mock(Wizard.class));
     final Spellbook spellbook = mock(Spellbook.class);
     when(spellbook.getWizards()).thenReturn(wizards);
 

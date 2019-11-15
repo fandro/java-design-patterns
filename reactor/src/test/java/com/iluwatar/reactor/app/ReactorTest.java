@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,14 +20,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.reactor.app;
-
-import java.io.IOException;
-
-import org.junit.Test;
 
 import com.iluwatar.reactor.framework.SameThreadDispatcher;
 import com.iluwatar.reactor.framework.ThreadPoolDispatcher;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 /**
  * 
@@ -35,6 +37,8 @@ import com.iluwatar.reactor.framework.ThreadPoolDispatcher;
  * concurrent logging requests using multiple clients.
  */
 public class ReactorTest {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(ReactorTest.class);
 
   /**
    * Test the application using pooled thread dispatcher.
@@ -44,6 +48,7 @@ public class ReactorTest {
    */
   @Test
   public void testAppUsingThreadPoolDispatcher() throws IOException, InterruptedException {
+    LOGGER.info("testAppUsingThreadPoolDispatcher start");
     App app = new App(new ThreadPoolDispatcher(2));
     app.start();
 
@@ -54,12 +59,13 @@ public class ReactorTest {
     try {
       Thread.sleep(2000);
     } catch (InterruptedException e) {
-      e.printStackTrace();
+      LOGGER.error("sleep interrupted", e);
     }
 
     client.stop();
 
     app.stop();
+    LOGGER.info("testAppUsingThreadPoolDispatcher stop");
   }
 
   /**
@@ -70,6 +76,7 @@ public class ReactorTest {
    */
   @Test
   public void testAppUsingSameThreadDispatcher() throws IOException, InterruptedException {
+    LOGGER.info("testAppUsingSameThreadDispatcher start");
     App app = new App(new SameThreadDispatcher());
     app.start();
 
@@ -80,11 +87,12 @@ public class ReactorTest {
     try {
       Thread.sleep(2000);
     } catch (InterruptedException e) {
-      e.printStackTrace();
+      LOGGER.error("sleep interrupted", e);
     }
 
     client.stop();
 
     app.stop();
+    LOGGER.info("testAppUsingSameThreadDispatcher stop");
   }
 }

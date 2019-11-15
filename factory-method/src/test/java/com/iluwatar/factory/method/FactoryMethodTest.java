@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.factory.method;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * The Factory Method is a creational design pattern which uses factory methods to deal with the
@@ -53,7 +54,7 @@ public class FactoryMethodTest {
   }
 
   /**
-   * Testing {@link OrcBlacksmith} to produce a AXE asserting that the Weapon is an instance
+   * Testing {@link OrcBlacksmith} to produce an AXE asserting that the Weapon is an instance
    *  of {@link OrcWeapon}.
    */
   @Test
@@ -94,8 +95,7 @@ public class FactoryMethodTest {
    * @param clazz expected class of the weapon
    */
   private void verifyWeapon(Weapon weapon, WeaponType expectedWeaponType, Class<?> clazz) {
-    assertTrue("Weapon must be an object of: " + clazz.getName(), clazz.isInstance(weapon));
-    assertEquals("Weapon must be of weaponType: " + clazz.getName(), expectedWeaponType,
-        weapon.getWeaponType());
+    assertTrue(clazz.isInstance(weapon), "Weapon must be an object of: " + clazz.getName());
+    assertEquals(expectedWeaponType, weapon.getWeaponType(), "Weapon must be of weaponType: " + expectedWeaponType);
   }
 }

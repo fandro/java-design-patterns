@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.model.view.presenter;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.Serializable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Every instance of this class represents the Model component in the Model-View-Presenter
@@ -32,7 +37,14 @@ import java.io.FileReader;
  * <p>
  * It is responsible for reading and loading the contents of a given file.
  */
-public class FileLoader {
+public class FileLoader implements Serializable {
+
+  /**
+   * Generated serial version UID
+   */
+  private static final long serialVersionUID = -4745803872902019069L;
+  
+  private static final Logger LOGGER = LoggerFactory.getLogger(FileLoader.class);
 
   /**
    * Indicates if the file is loaded or not.
@@ -48,7 +60,8 @@ public class FileLoader {
    * Loads the data of the file specified.
    */
   public String loadData() {
-    try (BufferedReader br = new BufferedReader(new FileReader(new File(this.fileName)))) {
+    String dataFileName = this.fileName;
+    try (BufferedReader br = new BufferedReader(new FileReader(new File(dataFileName)))) {
       StringBuilder sb = new StringBuilder();
       String line;
 
@@ -60,7 +73,7 @@ public class FileLoader {
 
       return sb.toString();
     } catch (Exception e) {
-      e.printStackTrace();
+      LOGGER.error("File {} does not exist", dataFileName);
     }
 
     return null;

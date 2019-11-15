@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,17 +20,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.databus.members;
 
 import com.iluwatar.databus.DataBus;
 import com.iluwatar.databus.data.MessageData;
 import com.iluwatar.databus.data.StartingData;
 import com.iluwatar.databus.data.StoppingData;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Tests for {@link StatusMember}.
@@ -48,7 +51,7 @@ public class StatusMemberTest {
     //when
     statusMember.accept(startingData);
     //then
-    Assert.assertEquals(startTime, statusMember.getStarted());
+    assertEquals(startTime, statusMember.getStarted());
   }
 
   @Test
@@ -61,7 +64,7 @@ public class StatusMemberTest {
     //when
     statusMember.accept(stoppingData);
     //then
-    Assert.assertEquals(stop, statusMember.getStopped());
+    assertEquals(stop, statusMember.getStopped());
   }
 
   @Test
@@ -72,8 +75,8 @@ public class StatusMemberTest {
     //when
     statusMember.accept(messageData);
     //then
-    Assert.assertNull(statusMember.getStarted());
-    Assert.assertNull(statusMember.getStopped());
+    assertNull(statusMember.getStarted());
+    assertNull(statusMember.getStopped());
   }
 
 }

@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.doubledispatch;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Objects;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Date: 12/10/15 - 8:37 PM
@@ -86,7 +87,7 @@ public abstract class CollisionTest<O extends GameObject> {
         ? "Expected [" + targetName + "] to be on fire after colliding with [" + otherName + "] but it was not!"
         : "Expected [" + targetName + "] not to be on fire after colliding with [" + otherName + "] but it was!";
 
-    assertEquals(errorMessage, expectTargetOnFire, target.isOnFire());
+    assertEquals(expectTargetOnFire, target.isOnFire(), errorMessage);
   }
 
   /**
@@ -105,7 +106,7 @@ public abstract class CollisionTest<O extends GameObject> {
         ? "Expected [" + targetName + "] to be damaged after colliding with [" + otherName + "] but it was not!"
         : "Expected [" + targetName + "] not to be damaged after colliding with [" + otherName + "] but it was!";
 
-    assertEquals(errorMessage, expectedDamage, target.isDamaged());
+    assertEquals(expectedDamage, target.isDamaged(), errorMessage);
   }
 
 }

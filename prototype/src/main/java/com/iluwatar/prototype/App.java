@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.prototype;
 
 import org.slf4j.Logger;
@@ -52,7 +53,7 @@ public class App {
     Warlord warlord;
     Beast beast;
 
-    factory = new HeroFactoryImpl(new ElfMage(), new ElfWarlord(), new ElfBeast());
+    factory = new HeroFactoryImpl(new ElfMage("cooking"), new ElfWarlord("cleaning"), new ElfBeast("protecting"));
     mage = factory.createMage();
     warlord = factory.createWarlord();
     beast = factory.createBeast();
@@ -60,7 +61,7 @@ public class App {
     LOGGER.info(warlord.toString());
     LOGGER.info(beast.toString());
 
-    factory = new HeroFactoryImpl(new OrcMage(), new OrcWarlord(), new OrcBeast());
+    factory = new HeroFactoryImpl(new OrcMage("axe"), new OrcWarlord("sword"), new OrcBeast("laser"));
     mage = factory.createMage();
     warlord = factory.createWarlord();
     beast = factory.createBeast();

@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.monad;
 
 import org.slf4j.Logger;
@@ -50,7 +51,7 @@ public class App {
   /**
    * Program entry point.
    *
-   * @param args @param args command line args
+   * @param args command line args
    */
   public static void main(String[] args) {
     User user = new User("user", 24, Sex.FEMALE, "foobar.com");

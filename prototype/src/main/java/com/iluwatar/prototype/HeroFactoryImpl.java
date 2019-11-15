@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.prototype;
 
 /**
@@ -47,7 +48,7 @@ public class HeroFactoryImpl implements HeroFactory {
    */
   public Mage createMage() {
     try {
-      return mage.clone();
+      return mage.copy();
     } catch (CloneNotSupportedException e) {
       return null;
     }
@@ -58,7 +59,7 @@ public class HeroFactoryImpl implements HeroFactory {
    */
   public Warlord createWarlord() {
     try {
-      return warlord.clone();
+      return warlord.copy();
     } catch (CloneNotSupportedException e) {
       return null;
     }
@@ -69,7 +70,7 @@ public class HeroFactoryImpl implements HeroFactory {
    */
   public Beast createBeast() {
     try {
-      return beast.clone();
+      return beast.copy();
     } catch (CloneNotSupportedException e) {
       return null;
     }

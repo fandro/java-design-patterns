@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,28 +20,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.hexagonal.domain;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Set;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 
  * Unit tests for {@link LotteryNumbers}
  *
  */
-public class LotteryNumbersTest {
+class LotteryNumbersTest {
   
   @Test
-  public void testGivenNumbers() {
-    LotteryNumbers numbers = LotteryNumbers.create(
-            new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+  void testGivenNumbers() {
+    LotteryNumbers numbers = LotteryNumbers.create(Set.of(1, 2, 3, 4));
     assertEquals(numbers.getNumbers().size(), 4);
     assertTrue(numbers.getNumbers().contains(1));
     assertTrue(numbers.getNumbers().contains(2));
@@ -49,28 +46,24 @@ public class LotteryNumbersTest {
     assertTrue(numbers.getNumbers().contains(4));
   }
   
-  @Test(expected = UnsupportedOperationException.class)
-  public void testNumbersCantBeModified() {
-    LotteryNumbers numbers = LotteryNumbers.create(
-            new HashSet<>(Arrays.asList(1, 2, 3, 4)));
-    numbers.getNumbers().add(5);
+  @Test
+  void testNumbersCantBeModified() {
+    LotteryNumbers numbers = LotteryNumbers.create(Set.of(1, 2, 3, 4));
+    assertThrows(UnsupportedOperationException.class, () -> numbers.getNumbers().add(5));
   }
   
   @Test
-  public void testRandomNumbers() {
+  void testRandomNumbers() {
     LotteryNumbers numbers = LotteryNumbers.createRandom();
     assertEquals(numbers.getNumbers().size(), LotteryNumbers.NUM_NUMBERS);
   }
   
   @Test
-  public void testEquals() {
-    LotteryNumbers numbers1 = LotteryNumbers.create(
-            new HashSet<>(Arrays.asList(1, 2, 3, 4)));
-    LotteryNumbers numbers2 = LotteryNumbers.create(
-            new HashSet<>(Arrays.asList(1, 2, 3, 4)));
-    assertTrue(numbers1.equals(numbers2));
-    LotteryNumbers numbers3 = LotteryNumbers.create(
-            new HashSet<>(Arrays.asList(11, 12, 13, 14)));
-    assertFalse(numbers1.equals(numbers3));
+  void testEquals() {
+    LotteryNumbers numbers1 = LotteryNumbers.create(Set.of(1, 2, 3, 4));
+    LotteryNumbers numbers2 = LotteryNumbers.create(Set.of(1, 2, 3, 4));
+    assertEquals(numbers1, numbers2);
+    LotteryNumbers numbers3 = LotteryNumbers.create(Set.of(11, 12, 13, 14));
+    assertNotEquals(numbers1, numbers3);
   }
 }
